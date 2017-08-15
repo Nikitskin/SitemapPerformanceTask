@@ -165,7 +165,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Analyzer\WebSiteAnalyzer.cs" />
+    <Compile Include="Analyzer\PerformanceDiagnostics.cs" />
+    <Compile Include="Analyzer\UrlSiteMapParser.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
