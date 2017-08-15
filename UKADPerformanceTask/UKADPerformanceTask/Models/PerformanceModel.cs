@@ -14,8 +14,8 @@ namespace UKADPerformanceTask.Models
         {
             get
             {
-                var analyzer = new WebSiteAnalyzer(Url);
-                return analyzer.returnSiteMap();
+                var analyzer = new UrlSiteMapParser(Url);
+                return analyzer.ReturnSiteMap();
             }
             set { }
         }

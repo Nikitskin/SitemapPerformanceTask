@@ -5,11 +5,11 @@ using System.Xml.XPath;
 
 namespace UKADPerformanceTask.Analyzer
 {
-    public class WebSiteAnalyzer
+    public class UrlSiteMapParser
     {
         private string _url;
 
-        public WebSiteAnalyzer(string Url)
+        public UrlSiteMapParser(string Url)
         {
             if (!string.IsNullOrEmpty(Url))
             {
@@ -21,7 +21,7 @@ namespace UKADPerformanceTask.Analyzer
             }
         }
 
-        public List<string> returnSiteMap()
+        public List<string> ReturnSiteMap()
         {
             List<string> urls = new List<string>();
             if (!string.IsNullOrEmpty(_url))
@@ -46,6 +46,5 @@ namespace UKADPerformanceTask.Analyzer
             }
             return urls;
         }
-
     }
 }
