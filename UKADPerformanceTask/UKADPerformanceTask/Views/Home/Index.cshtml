@@ -13,8 +13,9 @@
         @Html.ValidationMessageFor(model => model.Url)
         <button type="submit">TestPerformance</button>
     }
+    @Html.DisplayFor(model => model.ResponseTime)
     <table>
-        @foreach (var item in model)
+        @*@foreach (var item in model)
         {
         <tr>
             <td>
@@ -23,8 +24,8 @@
                 </text>
             </td>
         </tr>
-        @*@Html.DisplayFor(model => model.ResponseTime)*@
-        }
+        
+        }*@
     </table>
     
 </body>

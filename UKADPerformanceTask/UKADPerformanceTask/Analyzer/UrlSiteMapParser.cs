@@ -8,6 +8,7 @@ namespace UKADPerformanceTask.Analyzer
     public class UrlSiteMapParser
     {
         private string _url;
+        private const string DEFAULT = "DEFAULT";
 
         public UrlSiteMapParser(string Url)
         {
@@ -34,7 +35,8 @@ namespace UKADPerformanceTask.Analyzer
 
                 foreach(var namespc in xmlNamespaceManager)
                 {
-                    XPathNodeIterator iterator = xNav.Select(string.Format("//{0}:loc", namespc), xmlNamespaceManager);
+                    XPathNodeIterator iterator = xNav.Select(string.Format("//{0}:loc", 
+                        string.IsNullOrEmpty(namespc.ToString()) ? DEFAULT : namespc), xmlNamespaceManager);
 
                     foreach (XPathNavigator node in iterator)
                     {
@@ -55,10 +57,8 @@ namespace UKADPerformanceTask.Analyzer
                 localNamespaces = xNav.GetNamespacesInScope(XmlNamespaceScope.Local);
                 foreach (var localNamespace in localNamespaces)
                 {
-                    string prefix = localNamespace.Key;
-                    if (string.IsNullOrEmpty(prefix))
-                        prefix = "DEFAULT";
-
+                    resolver.RemoveNamespace(localNamespace.Key, localNamespace.Value);
+                    string prefix = string.IsNullOrEmpty(localNamespace.Key) ? DEFAULT : localNamespace.Key;
                     resolver.AddNamespace(prefix, localNamespace.Value);
                 }
             }
