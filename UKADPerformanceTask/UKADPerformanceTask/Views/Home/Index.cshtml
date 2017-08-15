@@ -6,12 +6,26 @@
 
 <h2>Index</h2>
 <body>    
+    
     @using (Html.BeginForm("Performance", "Home", FormMethod.Post))
     {
         @Html.TextBoxFor(model => model.Url)
         @Html.ValidationMessageFor(model => model.Url)
         <button type="submit">TestPerformance</button>
     }
-    <text>@Html.DisplayFor(model => model.ResponseTime)</text>
+    <table>
+        @foreach (var item in model)
+        {
+        <tr>
+            <td>
+                <text>
+                    @item.ResponseTime
+                </text>
+            </td>
+        </tr>
+        @*@Html.DisplayFor(model => model.ResponseTime)*@
+        }
+    </table>
+    
 </body>
 
