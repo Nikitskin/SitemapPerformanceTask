@@ -29,23 +29,40 @@ namespace UKADPerformanceTask.Analyzer
                 
                 XmlReader xmlReader = new XmlTextReader(string.Format("{0}sitemap.xml", _url));
                 XPathDocument document = new XPathDocument(xmlReader);
-                XPathNavigator navigator = document.CreateNavigator();
+                XPathNavigator xNav = document.CreateNavigator();
+                XmlNamespaceManager xmlNamespaceManager = getNamespaces(xmlReader, xNav);
 
-                var namespaces = navigator.GetNamespacesInScope(XmlNamespaceScope.All);
-                XmlNamespaceManager resolver = new XmlNamespaceManager(xmlReader.NameTable);
-                resolver.AddNamespace(namespaces.Keys.FirstOrDefault(), namespaces.Values.FirstOrDefault());
-                //resolver.AddNamespace("sitemap", "https://www.sitemaps.org/schemas/sitemap/0.9");
-
-                XPathNodeIterator iterator = navigator.Select("//sitemap:loc", resolver);
-                
-                foreach(XPathNavigator node in iterator)
+                foreach(var namespc in xmlNamespaceManager)
                 {
-                    urls.Add(node.Value);
-                }
+                    XPathNodeIterator iterator = xNav.Select(string.Format("//{0}:loc", namespc), xmlNamespaceManager);
 
+                    foreach (XPathNavigator node in iterator)
+                    {
+                        urls.Add(node.Value);
+                    }
+                }
             }
             return urls;
         }
 
+        private XmlNamespaceManager getNamespaces(XmlReader xmlReader, XPathNavigator xNav)
+        {
+            XmlNamespaceManager resolver = new XmlNamespaceManager(xmlReader.NameTable);
+
+            IDictionary<string, string> localNamespaces = null;
+            while (xNav.MoveToFollowing(XPathNodeType.Element))
+            {
+                localNamespaces = xNav.GetNamespacesInScope(XmlNamespaceScope.Local);
+                foreach (var localNamespace in localNamespaces)
+                {
+                    string prefix = localNamespace.Key;
+                    if (string.IsNullOrEmpty(prefix))
+                        prefix = "DEFAULT";
+
+                    resolver.AddNamespace(prefix, localNamespace.Value);
+                }
+            }
+            return resolver;
+        }
     }
 }
