@@ -13,3 +13,5 @@
 2017-08-15 23:50:59.5359|INFO|UKADPerformanceTask.MvcApplication|Application Start
 2017-08-15 23:54:51.3066|INFO|UKADPerformanceTask.MvcApplication|Application Start
 2017-08-15 23:57:45.4129|INFO|UKADPerformanceTask.MvcApplication|Application Start
+2017-08-16 23:12:33.8856|INFO|UKADPerformanceTask.MvcApplication|Application Start
+2017-08-21 22:12:46.5944|INFO|UKADPerformanceTask.MvcApplication|Application Start
