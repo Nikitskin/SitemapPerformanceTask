@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Lesson project";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    @model UKADPerformanceTask.Models.PerformanceModel
+    @model UKADPerformanceTask.Models.PerformanceModel;
 }
 
 <h2>Index</h2>
@@ -12,17 +12,18 @@
         @Html.ValidationMessageFor(model => model.Url)
         <button type="submit">TestPerformance</button>
     }
+    @*@Html.DisplayFor(model => model.ResponseTime)*@
     <table>
-        @foreach (var item in model)
+        @Html.DisplayFor(model => model.ResponseTime);
+        @foreach (var item in Model)
         {
         <tr>
             <td>
                 <text>
-                    @item.ResponseTime
+                    @item
                 </text>
             </td>
         </tr>
-        @*@Html.DisplayFor(model => model.ResponseTime)*@
         }
     </table>
     
