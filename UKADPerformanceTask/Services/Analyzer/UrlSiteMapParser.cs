@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Xml;
 using System.Xml.XPath;
 
-namespace UKADPerformanceTask.Analyzer
+namespace Services.Analyzer
 {
-    public class UrlSiteMapParser
+    public class UrlSiteMapParser : IAnalyzer
     {
         private string _url;
         private const string DEFAULT = "DEFAULT";

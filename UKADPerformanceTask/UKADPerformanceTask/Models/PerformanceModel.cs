@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using UKADPerformanceTask.Analyzer;
 
 namespace UKADPerformanceTask.Models
 {

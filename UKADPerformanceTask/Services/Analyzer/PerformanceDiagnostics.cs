@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 
-namespace UKADPerformanceTask.Analyzer
+namespace Services.Analyzer
 {
     public static class PerformanceDiagnostics
     {
