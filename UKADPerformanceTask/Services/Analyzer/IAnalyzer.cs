@@ -5,6 +5,6 @@ namespace Services.Analyzer
 {
     public interface IAnalyzer
     {
-        List<string> ReturnSiteMap();
+        List<string> ReturnSiteMap(string url);
     }
 }

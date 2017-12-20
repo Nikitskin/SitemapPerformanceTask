@@ -8,9 +8,10 @@ namespace UKADPerformanceTask.Controllers
     {
         private IAnalyzer _analyzer;
 
-        public HomeController(IAnalyzer analyzer)
+        public HomeController()
         {
-            _analyzer = analyzer;
+            //todo create IOC 
+            _analyzer = new UrlSiteMapParser();
         }
 
         public ActionResult Index()
@@ -21,7 +22,7 @@ namespace UKADPerformanceTask.Controllers
         [HttpPost]
         public ActionResult Index(PerformanceModel model)
         {
-            _analyzer.ReturnSiteMap();
+            ViewBag.SiteMap = _analyzer.ReturnSiteMap(model.Url);
             return View("Index", model);
         }
 

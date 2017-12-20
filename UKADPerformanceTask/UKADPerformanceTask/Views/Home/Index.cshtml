@@ -1,23 +1,25 @@
-﻿@model UKADPerformanceTask.Models.PerformanceModel
+﻿<!DOCTYPE html>
+<html>
 @{
-    ViewBag.Title = "Lesson project";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    
-}
-
+@model UKADPerformanceTask.Models.PerformanceModel
+        }
 <h2>Index</h2>
 <body>    
-    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-    {
-        @Html.TextBoxFor(model => model.Url)
-        @Html.ValidationMessageFor(model => model.Url)
-        <button type="submit">TestPerformance</button>
-    }
-    
-    <table>
-        @Html.DisplayFor(model => model.ResponseTime);
-        
-    </table>
-    
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    <div>Input url value to find sitemap</div>
+    @Html.TextBoxFor(model => model.Url);
+    <button type="submit">TestPerformance</button>
+}
+@if (ViewBag.Sitemap != null)
+{
+    <ul>
+        @foreach (var value in ViewBag.Sitemap)
+        {
+            <li>@value</li>
+        }
+    </ul>
+}
 </body>
-
+</html>

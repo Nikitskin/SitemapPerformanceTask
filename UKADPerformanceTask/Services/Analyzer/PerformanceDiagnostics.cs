@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
+using System.Web;
 
 namespace Services.Analyzer
 {
@@ -12,11 +13,15 @@ namespace Services.Analyzer
             var resultMap = new Dictionary<string, TimeSpan>();
             foreach (var url in urls)
             {
-                Stopwatch timer = new Stopwatch();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                var timer = new Stopwatch();
+                var request = (HttpWebRequest)WebRequest.Create(url);
                 timer.Start();
-                var response = (HttpWebResponse)request.GetResponse();
+                var response = (HttpWebResponse) request.GetResponse();
                 timer.Stop();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    
+                }
                 resultMap.Add(url, timer.Elapsed);
             }
             return resultMap;

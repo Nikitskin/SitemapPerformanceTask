@@ -6,28 +6,15 @@ namespace Services.Analyzer
 {
     public class UrlSiteMapParser : IAnalyzer
     {
-        private string _url;
         private const string DEFAULT = "DEFAULT";
 
-        public UrlSiteMapParser(string Url)
-        {
-            if (!string.IsNullOrEmpty(Url))
-            {
-                _url = Url;
-            }
-            else
-            {
-                _url = string.Empty;
-            }
-        }
-
-        public List<string> ReturnSiteMap()
+        public List<string> ReturnSiteMap(string url)
         {
             List<string> urls = new List<string>();
-            if (!string.IsNullOrEmpty(_url))
+            if (!string.IsNullOrEmpty(url))
             {
                 
-                XmlReader xmlReader = new XmlTextReader(string.Format("{0}sitemap.xml", _url));
+                XmlReader xmlReader = new XmlTextReader(string.Format("{0}sitemap.xml", url));
                 XPathDocument document = new XPathDocument(xmlReader);
                 XPathNavigator xNav = document.CreateNavigator();
                 XmlNamespaceManager xmlNamespaceManager = getNamespaces(xmlReader, xNav);
