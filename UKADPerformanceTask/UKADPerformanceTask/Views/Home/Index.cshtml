@@ -15,9 +15,9 @@
 @if (ViewBag.Sitemap != null)
 {
     <ul>
-        @foreach (var value in ViewBag.Sitemap)
+        @foreach (var dictEntity in ViewBag.Sitemap)
         {
-            <li>@value</li>
+            <li>@dictEntity.Key - @dictEntity.Value</li>
         }
     </ul>
 }

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
 using System.Xml.XPath;
+using BusinessLayer.Interfaces;
 
-namespace Services.Analyzer
+namespace BusinessLayer.Analyzer
 {
     public class UrlSiteMapParser : IAnalyzer
     {

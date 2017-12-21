@@ -1,30 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net;
-using System.Web;
+using System.Net.Http;
+using System.Threading.Tasks;
+using BusinessLayer.Interfaces;
 
-namespace Services.Analyzer
+namespace BusinessLayer.Analyzer
 {
-    public static class PerformanceDiagnostics
+    public class PerformanceDiagnostics : IPerformanceDiagostics
     {
-        public static Dictionary<string,TimeSpan> GetUrlsResponseTime(List<string> urls)
+        private readonly double _timeoutValue;
+
+        public PerformanceDiagnostics(double timeoutValue = 20.0d)
         {
-            var resultMap = new Dictionary<string, TimeSpan>();
+            _timeoutValue = timeoutValue;
+        }
+
+        public async Task<Dictionary<string, TimeSpan>> GetUrlsToCallBackTime(List<string> urls)
+        {
+            var resultingDictionary = new Dictionary<string, TimeSpan>();
             foreach (var url in urls)
             {
-                var timer = new Stopwatch();
-                var request = (HttpWebRequest)WebRequest.Create(url);
-                timer.Start();
-                var response = (HttpWebResponse) request.GetResponse();
-                timer.Stop();
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    
-                }
-                resultMap.Add(url, timer.Elapsed);
+                resultingDictionary.Add(url, await GetCallBackTime(url));
             }
-            return resultMap;
+            return resultingDictionary;
+        }
+
+        //todo can be refactored with the model using
+        /// <summary>
+        /// Returns time needed to get response from url
+        /// if timeout reached, then TimeSpan.MaxValue returned
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public async Task<TimeSpan> GetCallBackTime(string url)
+        {
+            var httpClient = new HttpClient
+            {
+                Timeout = TimeSpan.FromSeconds(_timeoutValue)
+            };
+            var timer = Stopwatch.StartNew();
+            var result = await httpClient.GetAsync(url);
+            timer.Stop();
+            return result.IsSuccessStatusCode ? timer.Elapsed : TimeSpan.MaxValue;
         }
     }
 }
