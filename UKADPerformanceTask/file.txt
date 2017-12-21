@@ -19,3 +19,10 @@
 2017-12-20 21:18:20.0694|INFO|UKADPerformanceTask.MvcApplication|Application Start
 2017-12-20 21:21:25.3451|INFO|UKADPerformanceTask.MvcApplication|Application Start
 2017-12-20 21:23:55.0533|INFO|UKADPerformanceTask.MvcApplication|Application Start
+2017-12-21 17:54:30.0943|INFO|UKADPerformanceTask.MvcApplication|Application Start
+2017-12-21 18:09:05.6244|INFO|UKADPerformanceTask.MvcApplication|Application Start
+2017-12-21 18:37:34.6021|INFO|UKADPerformanceTask.MvcApplication|Application Start
+2017-12-21 18:42:23.0977|INFO|UKADPerformanceTask.MvcApplication|Application Start
+2017-12-21 18:46:12.3237|INFO|UKADPerformanceTask.MvcApplication|Application Start
+2017-12-21 18:48:14.2934|INFO|UKADPerformanceTask.MvcApplication|Application Start
+2017-12-21 18:59:39.0417|INFO|UKADPerformanceTask.MvcApplication|Application Start

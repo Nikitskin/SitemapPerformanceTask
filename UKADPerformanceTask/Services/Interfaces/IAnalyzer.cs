@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 
-namespace Services.Analyzer
+namespace BusinessLayer.Interfaces
 {
     public interface IAnalyzer
     {

@@ -1,5 +1,7 @@
-﻿using System.Web.Mvc;
-using Services.Analyzer;
+﻿using System.Threading.Tasks;
+using System.Web.Mvc;
+using BusinessLayer.Analyzer;
+using BusinessLayer.Interfaces;
 using UKADPerformanceTask.Models;
 
 namespace UKADPerformanceTask.Controllers
@@ -7,11 +9,13 @@ namespace UKADPerformanceTask.Controllers
     public class HomeController : Controller
     {
         private IAnalyzer _analyzer;
+        private IPerformanceDiagostics _performanceDiagostics;
 
         public HomeController()
         {
             //todo create IOC 
             _analyzer = new UrlSiteMapParser();
+            _performanceDiagostics= new PerformanceDiagnostics();
         }
 
         public ActionResult Index()
@@ -20,9 +24,10 @@ namespace UKADPerformanceTask.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(PerformanceModel model)
+        public async Task<ActionResult> Index(PerformanceModel model)
         {
-            ViewBag.SiteMap = _analyzer.ReturnSiteMap(model.Url);
+            var dictionary = await _performanceDiagostics.AsyncGetUrlsToCallBackTime(_analyzer.ReturnSiteMap(model.Url));
+            ViewBag.SitemapPerformanceResults = dictionary;
             return View("Index", model);
         }
 
