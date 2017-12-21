@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using BusinessLayer.Interfaces;
@@ -16,13 +17,15 @@ namespace BusinessLayer.Analyzer
             _timeoutValue = timeoutValue;
         }
 
-        public async Task<Dictionary<string, TimeSpan>> GetUrlsToCallBackTime(List<string> urls)
+        public async Task<Dictionary<string, TimeSpan>> AsyncGetUrlsToCallBackTime(List<string> urls)
         {
             var resultingDictionary = new Dictionary<string, TimeSpan>();
-            foreach (var url in urls)
-            {
-                resultingDictionary.Add(url, await GetCallBackTime(url));
-            }
+            var taskList = urls.Select(url =>
+                Task.Factory.StartNew(async () =>
+                {
+                    resultingDictionary.Add(url, await GetCallBackTime(url));
+                }));
+            await Task.WhenAll(taskList);
             return resultingDictionary;
         }
 

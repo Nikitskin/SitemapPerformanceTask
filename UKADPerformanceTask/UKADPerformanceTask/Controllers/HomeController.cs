@@ -26,7 +26,8 @@ namespace UKADPerformanceTask.Controllers
         [HttpPost]
         public async Task<ActionResult> Index(PerformanceModel model)
         {
-            ViewBag.SiteMap = await _performanceDiagostics.GetUrlsToCallBackTime(_analyzer.ReturnSiteMap(model.Url));
+            var dictionary = await _performanceDiagostics.AsyncGetUrlsToCallBackTime(_analyzer.ReturnSiteMap(model.Url));
+            ViewBag.SitemapPerformanceResults = dictionary;
             return View("Index", model);
         }
 
