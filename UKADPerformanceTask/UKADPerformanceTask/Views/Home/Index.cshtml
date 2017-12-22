@@ -1,28 +1,48 @@
 ﻿<!DOCTYPE html>
 <html>
+@using UKADPerformanceTask.Extensions;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    @model UKADPerformanceTask.Models.PerformanceModel
+    ViewBag.Title = "Performance testing page";
+    @model UKADPerformanceTask.Models.RequestModel
 }
 <h2>Index</h2>
 <body>
     @using (Html.BeginForm("Index", "Home", FormMethod.Post))
     {
         <div>Input url value to find sitemap</div>
-        @Html.TextBoxFor(model => model.Url);
+        @Html.TextBoxFor(model => model.UrlToGetSitemap)
+        <br />
+        @Html.DropDownListFor(model => model.PageSize, new List<SelectListItem>
+        {
+            new SelectListItem{Text = "10", Value = "10"},
+            new SelectListItem{Text = "20", Value = "20"},
+            new SelectListItem{Text = "30", Value = "30"}
+        })
         <button type="submit">TestPerformance</button>
     }
+    <br />
     @if (ViewBag.SitemapPerformanceResults != null)
     {
         <table>
+            <tr>
+                <td>URL</td>
+                <td>Miliseconds</td>
+            </tr>
             @foreach (var dictEntity in ViewBag.SitemapPerformanceResults)
             {
                 <tr>
-                    <td>@dictEntity.Key</td>
                     <td>@dictEntity.Value</td>
                 </tr>
             }
         </table>
+        <br />
+        <div class="btn-group">
+            @*@{
+                
+                @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new {page = x}))
+            }*@
+        </div>
     }
 </body>
 </html>

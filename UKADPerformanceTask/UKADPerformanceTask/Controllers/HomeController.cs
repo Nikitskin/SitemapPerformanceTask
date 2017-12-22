@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using BusinessLayer.Analyzer;
 using BusinessLayer.Interfaces;
@@ -24,12 +26,15 @@ namespace UKADPerformanceTask.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Index(PerformanceModel model)
+        public async Task<ActionResult> Index(RequestModel model, int page = 1)
         {
-            var dictionary = await _performanceDiagostics.AsyncGetUrlsToCallBackTime(_analyzer.ReturnSiteMap(model.Url));
-            ViewBag.SitemapPerformanceResults = dictionary;
-            return View("Index", model);
+            var _listOfUrls = _analyzer.ReturnSiteMap(model.UrlToGetSitemap);
+            ViewBag.ListOfUrls = _listOfUrls;
+            var pageInfo = new PageInfo { PageSize = int.Parse(model.PageSize), TotalItems = _listOfUrls.Count, PageNumber = page };
+            var recordsPerPage = _listOfUrls.Skip((page - 1) * pageInfo.PageSize).Take(pageInfo.PageSize); 
+            var result = await _performanceDiagostics.AsyncGetUrlsToCallBackTime(recordsPerPage);
+            ViewBag.PageIndex = new IndexViewModel { PageInfo = pageInfo, PerformanceModels = result };
+            return View(model);
         }
-
     }
 }

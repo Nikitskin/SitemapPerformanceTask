@@ -75,6 +75,7 @@
     <Compile Include="Analyzer\PerformanceDiagnostics.cs" />
     <Compile Include="Analyzer\UrlSiteMapParser.cs" />
     <Compile Include="Interfaces\IPerformanceDiagostics.cs" />
+    <Compile Include="Models\PerformanceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup>

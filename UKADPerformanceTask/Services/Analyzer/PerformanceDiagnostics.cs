@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using BusinessLayer.Interfaces;
+using BusinessLayer.Models;
 
 namespace BusinessLayer.Analyzer
 {
@@ -17,15 +17,14 @@ namespace BusinessLayer.Analyzer
             _timeoutValue = timeoutValue;
         }
 
-        public async Task<Dictionary<string, TimeSpan>> AsyncGetUrlsToCallBackTime(List<string> urls)
+        public async Task<IEnumerable<PerformanceModel>> AsyncGetUrlsToCallBackTime(IEnumerable<string> urls)
         {
-            var resultingDictionary = new Dictionary<string, TimeSpan>();
-            var taskList = urls.Select(url =>
-                Task.Factory.StartNew(async () =>
-                {
-                    resultingDictionary.Add(url, await GetCallBackTime(url));
-                }));
-            await Task.WhenAll(taskList);
+            var resultingDictionary = new List<PerformanceModel>();
+            foreach (var url in urls)
+            {
+                var result = await GetCallBackTime(url);
+                resultingDictionary.Add(new PerformanceModel{ Url = url, ResponseTime = result});
+            }
             return resultingDictionary;
         }
 
@@ -42,10 +41,18 @@ namespace BusinessLayer.Analyzer
             {
                 Timeout = TimeSpan.FromSeconds(_timeoutValue)
             };
-            var timer = Stopwatch.StartNew();
-            var result = await httpClient.GetAsync(url);
-            timer.Stop();
-            return result.IsSuccessStatusCode ? timer.Elapsed : TimeSpan.MaxValue;
+            try
+            {
+                var timer = Stopwatch.StartNew();
+                var result = await httpClient.GetAsync(url);
+                timer.Stop();
+                return result.IsSuccessStatusCode ? timer.Elapsed : TimeSpan.Zero;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

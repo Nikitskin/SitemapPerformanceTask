@@ -1,0 +1,13 @@
+﻿@using UKADPerformanceTask.Extensions;
+@model UKADPerformanceTask.Models.IndexViewModel
+<html>
+@{
+    ViewBag.Title = "Results";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<body>
+    <h2>Results</h2>
+    @Html.RouteLink("Back to url search page", new { Action = "Index", Controller = "Home" })
+   
+</body>
+</html>
